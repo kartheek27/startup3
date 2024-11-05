@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plans & Pricing</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Title and Toggle */
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+        /* Pricing Plans Container */
+        .pricing-plans {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* Plan Box Styling */
+        .plan-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Plan Titles and Prices */
+        .plan-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .plan-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .plan-price small {
+            font-size: 16px;
+            color: #888;
+        }
+
+        /* Try Button and Subscribe Button */
+        .btn-try, .btn-subscribe {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            border: none;
+        }
+
+        .btn-try {
+            background-color: #28a745; /* Green color */
+        }
+
+        .btn-subscribe {
+            background-color: #007bff; /* Blue color */
+        }
+
+        /* Features List */
+        .features-list {
+            text-align: left;
+            margin: 20px 0;
+            color: #666;
+        }
+
+        .features-list li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-header">
+        <h1>Plans & Pricing</h1>
+    </div>
+
+    <div class="pricing-plans">
+        <!-- induvidual Plan -->
+        <div class="plan-box">
+            <div class="plan-title">Individual Account</div>
+            <div class="plan-price">₹100<small>/mo</small></div>
+            <center><h3>Billed Anually</h3></center>
+            <button class="btn-try">Subscribe</button>
+            <ul class="features-list">
+                <li>For single member</li>
+                <li>Data cannot be retrived</li>
+                <li>Basic analytics and tracking</li>
+            </ul>
+        </div>
+
+        <!-- Joint Plan -->
+        <div class="plan-box">
+            <div class="plan-title">Joint Account</div>
+            <div class="plan-price">₹150<small>/mo</small></div>
+            <center><h3>Billed Anually</h3></center>
+            <button class="btn-try">Subscribe</button>
+            <ul class="features-list">
+                <li>For two members</li>
+                <li>Data can be retrived</li>
+                <li>Advanced analytics and tracking</li>
+                <li>SEO, PPC, and keyword tracking tools</li>
+            </ul>
+        </div>
+
+        <!-- Family Plan -->
+        <div class="plan-box">
+            <div class="plan-title">Family/Group Account</div>
+            <div class="plan-price">₹200<small>/mo</small></div>
+            <center><h3>Billed Anually</h3></center>
+            <button class="btn-subscribe">Subscribe</button>
+            <ul class="features-list">
+                <li>For three to five members</li>
+                <li>Data can be retrived</li>
+                <li>Premium analytics and support</li>
+                <li>API access, custom solutions, and more</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>StartUp</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="/media/img/favicon.png" rel="icon">
+  <link href="/media/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/media/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/media/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/media/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/media/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/media/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/media/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+
+  <!-- =======================================================
+  * Template Name: Logis
+  * Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="/media/img/logo.png" alt="">
+        <h1 class="sitename">StartUp</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'home' %}" class="active">Home<br></a></li>
+          <!-- <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li> -->
+
+          <li><a href="{% url 'pricing' %}">Plans & Pricing</a></li>
+
+          <li class="dropdown"><a href="{% url 'customer' %}"><span>Registration</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'customer' %}">Customer</a></li>
+              <li><a href="#">Agent</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'login_page' %}">Login</a></li>
+          <li><a href="services.html">FAQ's</a></li>
+          <li><a href="contact.html">Aboutus</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <!-- <a class="btn-getstarted" href="get-a-quote.html">Upload Bill</a> -->
+
+      <div class="mode">
+        <input type="checkbox" class="checkbox" id="checkbox">
+        <label for="checkbox" class="checkbox-label">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+          <span class="ball"></span>
+        </label>
+        <p class="mode-btn">Offline</p>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="/media/img/world-dotted-map.png" alt="" class="hero-bg" data-aos="fade-in">
+
+      <div class="container">
+        <div class="row gy-4 d-flex justify-content-between">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <h2 data-aos="fade-up">Your Lightning Fast Delivery Partner</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Facere distinctio molestiae nisi fugit tenetur repellat non praesentium nesciunt optio quis sit odio nemo quisquam. eius quos reiciendis eum vel eum voluptatem eum maiores eaque id optio ullam occaecati odio est possimus vel reprehenderit</p>
+
+            <form action="#" class="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+              <input type="text" class="form-control" placeholder="Your ZIP code or City. e.g. New York">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+            <div class="row gy-4" data-aos="fade-up" data-aos-delay="300">
+
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="0" class="purecounter">232</span>
+                  <p>Clients</p>
+                </div>
+              </div><!-- End Stats Item -->
+
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="0" class="purecounter">521</span>
+                  <p>Projects</p>
+                </div>
+              </div><!-- End Stats Item -->
+
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="0" class="purecounter">1453</span>
+                  <p>Support</p>
+                </div>
+              </div><!-- End Stats Item -->
+
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="0" class="purecounter">32</span>
+                  <p>Workers</p>
+                </div>
+              </div><!-- End Stats Item -->
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+            <img src="/media/img/hero-img.svg" class="img-fluid mb-3 mb-lg-0" alt="">
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+
+
+  </main>
+
+
+  <div style="margin: 50px; background-color: #f4f4f4;">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo ipsa nihil earum, adipisci ea quam esse architecto a. Laborum dolorem facilis quibusdam molestias? Corrupti velit itaque minima perspiciatis, ipsum excepturi sequi saepe ipsam, ea eveniet expedita repellat perferendis sit minus officiis. A earum at maxime molestias deleniti id eius amet necessitatibus itaque obcaecati voluptas nesciunt laboriosam quia commodi voluptatibus officiis aperiam, perspiciatis beatae consequatur libero dicta in dignissimos officia. Eos deserunt nostrum facere recusandae repudiandae quisquam. Deleniti quis excepturi culpa tempora! Dolores repellat doloribus nulla dignissimos ut, necessitatibus architecto rerum labore atque voluptatum commodi modi dolorem in excepturi exercitationem provident dolor dolorum? Autem, exercitationem. Nisi magni qui eius deserunt, rem recusandae reprehenderit inventore, perspiciatis atque dignissimos perferendis natus, numquam officia quaerat veritatis voluptate modi cumque iusto sapiente! Modi error, quibusdam maxime repudiandae delectus, impedit eligendi tempore sint recusandae repellat esse dolore nesciunt ab placeat reprehenderit atque molestiae ducimus maiores alias corporis hic dolorum. Tenetur dolor totam blanditiis dignissimos nam non dicta minus culpa voluptas laboriosam praesentium hic aliquid, vel quae suscipit eligendi porro molestiae corporis? Aut, nostrum expedita dignissimos ea illo nemo, est sed assumenda, tempora sapiente ducimus optio! Enim veritatis ipsa reprehenderit asperiores culpa provident facere laboriosam dicta ad
+  </div>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">StartUp</span>
+          </a>
+          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Customer</a></li>
+            <li><a href="#">Client</a></li>
+            <li><a href="#">Aboutus</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">service-1</a></li>
+            <li><a href="#">service-2</a></li>
+            <li><a href="#">service-3</a></li>
+            <li><a href="#">service-4</a></li>
+            <li><a href="#">service-5</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>A108 Adam Street</p>
+          <p>New York, NY 535022</p>
+          <p>United States</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <p><strong>Email:</strong> <span>info@example.com</span></p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">StartUp</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="">K.Kartheek</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/media/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/media/vendor/php-email-form/validate.js"></script>
+  <script src="/media/vendor/aos/aos.js"></script>
+  <script src="/media/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/media/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/media/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'main.js' %}"></script>
+
+</body>
+</html>

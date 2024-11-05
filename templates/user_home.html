@@ -1,0 +1,2463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .navbar a:hover,
+        .navbar a.active-link {
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        /* Container styles */
+        .container {
+            display: none;
+            padding: 20px;
+            max-width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container.active {
+            display: block;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        /* Add Icon button */
+        .add-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .modal form input, .modal form select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .container h3::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #4CAF50;
+            margin-top: 10px;
+        }
+
+        .single{
+            display: flex;
+            flex-direction: row;
+        }
+/* Modal container styling */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* Close button styling */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ff0000;
+}
+
+/* Form header */
+.modal-content h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form input styling */
+.modal-content input[type="number"],
+.modal-content input[type="text"],
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.modal-content select {
+    appearance: none;
+}
+
+/* Button styling */
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.modal-content button:hover {
+    background-color: #45a049;
+}
+
+
+.add-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-btn i {
+    margin-right: 5px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Limit max width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
+    border-radius: 10px; /* Optional rounded corners */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.container.personal {
+    max-width: 800px; /* Set max width for the container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Add padding */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.profile-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 20px; /* Space between columns */
+    margin-bottom: 20px; /* Space below grid */
+}
+
+.profile-info {
+    background: #fff; /* White background for info */
+    padding: 15px; /* Inner padding */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.update-form {
+    background: #fff; /* White background for form */
+    padding: 20px; /* Inner padding */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+label {
+    display: block; /* Make labels block level */
+    margin-top: 10px; /* Space above labels */
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Inner padding */
+    margin-top: 5px; /* Space above input */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.button1 {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding */
+    margin-top: 10px; /* Space above button */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth background change */
+}
+
+.button1:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#" onclick="showSection('personal')">User Profile</a>
+        <a href="#" onclick="showSection('family')">Family Details</a>
+        <a href="#" onclick="showSection('financial')">Financial Details</a>
+        <a href="#" onclick="showSection('loan')">Loan Details</a>
+        <a href="#" onclick="showSection('insurance')">Insurance</a>
+        <a href="#" onclick="showSection('properties')">Properties</a>
+        <a href="#" onclick="showSection('investment')">Investment</a>
+        <a href="#" onclick="showSection('schemes')">Schemes</a>
+        <a href="#" onclick="showSection('cards')">Cards</a>
+        <a href="#" onclick="showSection('documents')">Documents</a>
+    </div>
+
+    <!-- Sections -->
+    <div class="container personal active">
+        <h3>User Profile</h3>
+    
+        <div class="profile-grid">
+            <div class="profile-info">
+                <p><strong>UserID:</strong> {{ user.userid }}</p>
+                <p><strong>Name:</strong> {{ user.name }}</p>
+                <p><strong>Phone:</strong> {{ user.phone }}</p>
+                <p><strong>Marital Status:</strong> {{ user.marital }}</p>
+                <p><strong>Occupation:</strong> {{ user.occupation }}</p>
+                <p><strong>State:</strong> {{ user.state }}</p>
+                <p><strong>District:</strong> {{ user.district }}</p>
+                <p><strong>Mandal:</strong> {{ user.mandal }}</p>
+                <p><strong>Village:</strong> {{ user.village }}</p>
+                <p><strong>PIN:</strong> {{ user.pin }}</p>
+            </div>
+    
+            <div class="profile-info">
+                <p><strong>Current Address:</strong> {{ user.current_address }}</p>
+                <p><strong>Permanent Address:</strong> {{ user.permanent_address }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+            </div>
+        </div>
+    
+        <form action="{% url 'save-personal' %}" method="post" class="update-form">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+    
+            <label for="permanent-address">Permanent Address:</label>
+            <input type="text" name="permanent_address" id="permanent-address" value="{{ user.permanent_address }}" placeholder="Permanent Address">
+    
+            <label for="current-address">Current Address:</label>
+            <input type="text" name="current_address" id="current-address" value="{{ user.current_address }}" placeholder="Current Address">
+    
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" placeholder="Email">
+    
+            <button class="button1" type="submit">Update Profile</button>
+        </form>
+    </div>
+    
+    
+
+    <div class="container family">
+        <h3>Family Details</h3>
+        <!-- Add new family member button -->
+        <button class="add-btn" onclick="openModal('familyModal')" title="Add Family Member">
+            <i class="fas fa-plus"></i> Add Family Member
+        </button>
+    
+        <div class="single">
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Relationship</th>
+                        <th scope="col">Date Of Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in family_members %}
+                    <tr>
+                        <th scope="row">{{ member.sno }}</th>
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.relationship }}</td>
+                        <td>{{ member.age }}</td>
+                        <td>{{ member.gender }}</td>
+                        <td>
+                            <button class="edit-btn" onclick="openModal('editFamilyModal{{ member.id }}')">Edit</button>
+                            <button class="delete-btn" onclick="confirmDelete('{{ member.id }}', 'family')">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+        {% for member in family_members %}
+        <!-- Modal for Editing Family Member -->
+        <div id="editFamilyModal{{ member.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editFamilyModal{{ member.id }}')">&times;</span>
+                <h3>Edit Family Member</h3>
+                <form action="{% url 'edit-family' member.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" value="{{ member.sno }}">
+                    <input type="text" name="name" value="{{ member.name }}">
+                    <input type="date" name="age" value="{{ member.age }}">
+                    <select name="gender">
+                        <option value="male" {% if member.gender == 'male' %}selected{% endif %}>Male</option>
+                        <option value="female" {% if member.gender == 'female' %}selected{% endif %}>Female</option>
+                    </select>
+                    <select name="relationship" required>
+                        <option value="" disabled selected>Select Relation</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="son">Son</option>
+                        <option value="daughter">Daughter</option>
+                        <option value="grandmother">GrandMother</option>
+                        <option value="grandfather">GrandFather</option>
+                        <option value="grandson">GrandSon</option>
+                        <option value="granddaughter">GrandDaughter</option>
+                    </select>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    
+        <!-- Modal for Adding Family Member -->
+        <div id="familyModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('familyModal')">&times;</span>
+                <h3>Add Family Member</h3>
+                <form action="{% url 'family' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" placeholder="Serial Number">
+                    <br>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <br>
+                    <input type="date" name="age" placeholder="Date of birth" required>
+                    <br>
+                    <select name="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <br>
+                    <select name="relationship" required>
+                        <option value="" disabled selected>Select Relation</option>
+                        <option value="father">Father</option>
+                        <option value="mother">Mother</option>
+                        <option value="son">Son</option>
+                        <option value="daughter">Daughter</option>
+                        <option value="grandmother">GrandMother</option>
+                        <option value="grandfather">GrandFather</option>
+                        <option value="grandson">GrandSon</option>
+                        <option value="granddaughter">GrandDaughter</option>
+                    </select>
+                    <br>
+                    <button type="submit">Add Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container financial">
+        <h3>Financial Details</h3>
+    
+        <!-- Bank Accounts Section -->
+        <h4>Bank Accounts</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">Type of Account</th>
+                    <th scope="col">Branch</th>
+                    <th scope="col">Account No</th>
+                    <th scope="col">IFSC</th>
+                    <th scope="col">Nominee</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in bank_accounts %}
+                <tr>
+                    <td>{{ account.sno }}</td>
+                    <td><strong>{{ account.bank_name }}</strong></td>
+                    <td>{{account.type}}</td>
+                    <td>{{ account.bank_address }}</td>
+                    <td>{{account.account}}</td>
+                    <td>{{account.ifsc}}</td>
+                    <td>{{account.nominee}}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openModal('editBankModal{{ account.id }}')">Edit</button>
+                        <button class="delete-btn" onclick="confirmDeleteBank('{{ account.id }}', 'bankacc')">Delete</button>
+                    </td>
+                </tr>
+                <!-- Modal for Editing Bank -->
+                <div id="editBankModal{{ account.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('editBankModal{{ account.id }}')">&times;</span>
+                        <h3>Edit Bank Account</h3>
+                        <form action="{% url 'edit-bank' account.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ user.userid }}">
+                            <input type="number" name="sno" value="{{ account.sno }}">
+                            <input type="text" name="bank_name" value="{{ account.bank_name }}">
+                            <select name="type">
+                                <option value="current">Current Account</option>
+                                <option value="savings">savings Account</option>
+                                <option value="joint">Joint Account</option>
+                            </select>
+                            <input type="text" name="bank_address" value="{{ account.bank_address }}">
+                            <input type="number" name="num" id="" value="{{account.account}}">
+                            <input type="text" name="ifsc" id="" value="{{account.ifsc}}">
+                            <input type="time" name="nominee" id="" value="{{account.nominee}}">
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="add-btn" onclick="openModal('bankModal')">+</button>
+    
+        <!-- Modal for Adding Bank Account -->
+        <div id="bankModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('bankModal')">&times;</span>
+                <h3>Add Bank</h3>
+                <form action="{% url 'bankacc' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" placeholder="Enter Serial No">
+                    <input type="text" name="bank_name" placeholder="Enter Bank Name" required>
+                    <select name="type">
+                        <option value="current">Current Account</option>
+                        <option value="savings">savings Account</option>
+                        <option value="joint">Joint Account</option>
+                    </select>
+                    <input type="text" name="bank_address" placeholder="Enter Bank Address or Branch" required>
+                    <input type="number" name="num" id="" placeholder="Enter Account No" required>
+                    <input type="text" name="ifsc" id="" placeholder="Enter IFSC Code" required>
+                    <input type="text" name="nominee" id="" placeholder="Enter Nominee Name">
+                    <button type="submit">Add Account</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Credit Section -->
+        <h4>Credit (Income)</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Mode</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for credit in credits %}
+                <tr>
+                    <td>{{credit.sno}}</td>
+                    <td><strong>{{ credit.name }}</strong></td>
+                    <td>{{ credit.address }}</td>
+                    <td>{{ credit.amount }}</td>
+                    <td>{{ credit.date }}</td>
+                    <td>{{ credit.mode }}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openModal('editCreditModal{{ credit.id }}')">Edit</button>
+                        <button class="delete-btn" onclick="confirmDeleteCredit('{{ credit.id }}', 'credit')">Delete</button>
+                    </td>
+                </tr>
+                <!-- Modal for Editing Credit -->
+                <div id="editCreditModal{{ credit.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('editCreditModal{{ credit.id }}')">&times;</span>
+                        <h3>Edit Credit</h3>
+                        <form action="{% url 'edit-credit' credit.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ user.userid }}">
+                            <input type="number" name="sno" value="{{ credit.sno }}">
+                            <input type="text" name="name" value="{{ credit.name }}">
+                            <input type="text" name="address" value="{{ credit.address }}">
+                            <input type="number" name="amount" id="" value="{{credit.amount}}">
+                            <input type="date" name="date" id="" value="{{credit.date}}">
+                            <input type="text" name="mode" value="{{credit.mode}}">
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="add-btn" onclick="openModal('creditModal')">+</button>
+    
+        <!-- Modal for Adding Credit -->
+        <div id="creditModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('creditModal')">&times;</span>
+                <h3>Add Credit</h3>
+                <form action="{% url 'credit' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" placeholder="Enter Serial No">
+                    <input type="text" name="name" placeholder="Enter Name" required>
+                    <input type="text" name="address" placeholder="Enter Address" required>
+                    <input type="number" name="amount" id="" placeholder="Enter Amount">
+                    <input type="date" name="date" id="" placeholder="Enter Date">
+                    <input type="text" name="mode" placeholder="Enter Mode of Payment">
+                    <button type="submit">Add Credit</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Debit Section -->
+        <h4>Debit (Outcome)</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Mode</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for debit in debits %}
+                <tr>
+                    <td>{{debit.sno}}</td>
+                    <td><strong>{{ debit.name }}</strong></td>
+                    <td>{{ debit.address }}</td>
+                    <td>{{ debit.amount }}</td>
+                    <td>{{ debit.date }}</td>
+                    <td>{{ debit.mode }}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openModal('editDebitModal{{ debit.id }}')">Edit</button>
+                        <button class="delete-btn" onclick="confirmDeleteDebit('{{ debit.id }}', 'debit')">Delete</button>
+                    </td>
+                </tr>
+                <!-- Modal for Editing Debit -->
+                <div id="editDebitModal{{ debit.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('editDebitModal{{ debit.id }}')">&times;</span>
+                        <h3>Edit Debit</h3>
+                        <form action="{% url 'edit-debit' debit.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ user.userid }}">
+                            <input type="number" name="sno" value="{{ debit.sno }}">
+                            <input type="text" name="name" value="{{ debit.name }}">
+                            <input type="text" name="address" value="{{ debit.address }}">
+                            <input type="number" name="amount" id="" value="{{debit.amount}}">
+                            <input type="date" name="date" id="" value="{{debit.date}}">
+                            <input type="text" name="mode" value="{{debit.mode}}">
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="add-btn" onclick="openModal('debitModal')">+</button>
+    
+        <!-- Modal for Adding Debit Details -->
+        <div id="debitModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('debitModal')">&times;</span>
+                <h3>Add Debit</h3>
+                <form action="{% url 'debit' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" placeholder="Enter Serial No">
+                    <input type="text" name="name" placeholder="Enter Name" required>
+                    <input type="text" name="address" placeholder="Enter Address" required>
+                    <input type="number" name="amount" id="" placeholder="Enter Amount">
+                    <input type="date" name="date" id="" placeholder="Enter Date">
+                    <input type="text" name="mode" placeholder="Enter Mode of Payment">
+                    <button type="submit">Add Debit</button>
+                </form>
+            </div>
+        </div>
+
+        <h4>PF Account</h4>
+<table class="table table-hover table-responsive">
+    <tr>
+        <th>S.No</th>
+        <th>UAN No</th>
+        <th>PF Number/Member ID</th>
+        <th>Upload UAN Card</th>
+        <th>Actions</th>
+    </tr>
+    {% for i in pf_records %}
+    <tr>
+        <td>{{ i.sno }}</td>
+        <td>{{ i.UAN_no }}</td>
+        <td>{{ i.PF_number_or_Number_ID }}</td>
+        <td>
+            {% if i.upload_UAN_card %}
+            <a href="{{ i.upload_UAN_card.url }}" target="_blank">View</a>
+            {% else %}
+            No file uploaded
+            {% endif %}
+        </td>
+        <td>
+            <button class="edit-btn" onclick="openModal('editPFModal{{ i.id }}')">Edit</button>
+            <button class="delete-btn" onclick="confirmDeletePF('{{ i.id }}')">Delete</button>
+        </td>
+    </tr>
+
+    <!-- Modal for Editing PF Record -->
+    <div id="editPFModal{{ i.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editPFModal{{ i.id }}')">&times;</span>
+            <h3>Edit PF Record</h3>
+            <form action="{% url 'edit-pf' i.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                
+                <label>S.No:</label>
+                <input type="number" name="sno" value="{{ i.sno }}" required>
+                
+                <label>UAN No:</label>
+                <input type="number" name="UAN_no" value="{{ i.UAN_no }}" required>
+                
+                <label>PF Number/ID:</label>
+                <input type="text" name="PF_number_or_Number_ID" value="{{ i.PF_number_or_Number_ID }}" required>
+                
+                <label>Upload UAN Card:</label>
+                <input type="file" name="upload_UAN_card" accept="image/*">
+                <small>Leave blank if you don't want to change the current file.</small><br>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+
+<button class="add-btn" onclick="openModal('addPFModal')">Add PF Record</button>
+
+<!-- Modal for Adding PF Record -->
+<div id="addPFModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addPFModal')">&times;</span>
+        <h3>Add PF Record</h3>
+        <form action="{% url 'add-pf' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+            
+            <label>S.No:</label>
+            <input type="number" name="sno" required>
+            
+            <label>UAN No:</label>
+            <input type="number" name="UAN_no" required>
+            
+            <label>PF Number/Member ID:</label>
+            <input type="text" name="PF_number_or_Number_ID" required>
+            
+            <label>Upload UAN Card:</label>
+            <input type="file" name="upload_UAN_card" accept="image/*" required>
+
+            <button type="submit">Add Record</button>
+        </form>
+    </div>
+</div>
+
+    </div>
+
+
+
+
+    <!-- Loans Sections    -->
+
+    <!-- <div class="container loan">
+
+    </div> -->
+
+    <div class="container loan">
+        <h4>Personal Loan Details</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">IFSC Code</th>
+                    <th scope="col">Product Desciption</th>
+                    <th scope="col">Loan Account Number</th>
+                    <th scope="col">Loan Amount</th>
+                    <th scope="col">EMI Amount</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">ROI</th>
+                    <th scope="col">Date of Sanction</th>
+                    <th scope="col">Date of First EMI</th>
+                    <th scope="col">Date of Last EMI</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in personal %}
+                <tr>
+                    <td>{{ loan.sno }}</td>
+                    <td>{{ loan.bank_name }}</td>
+                    <td>{{ loan.ifsc }}</td>
+                    <td>{{ loan.product }}</td>
+                    <td>{{ loan.account }}</td>
+                    <td>{{ loan.loan_amount }}</td>
+                    <td>{{ loan.emi_amount }}</td>
+                    <td>{{ loan.duration }}</td>
+                    <td>{{ loan.ROI }}</td>
+                    <td>{{ loan.Date_of_sanction }}</td>
+                    <td>{{ loan.date_of_first_emi }}</td>
+                    <td>{{ loan.date_of_last_emi }}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openModal('editPersonalLoanModal{{ loan.id }}')">Edit</button>
+                        <button class="delete-btn" onclick="confirmDeletePerLoan('{{ loan.id }}', 'add-personal_loan')">Delete</button>
+                    </td>
+                </tr>
+<!-- Modal for Editing Personal Loan -->
+                <div id="editPersonalLoanModal{{ loan.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('editPersonalLoanModal{{ loan.id }}')">&times;</span>
+                        <h3>Edit Personal Loan</h3>
+                        <form action="{% url 'edit-personal-loan' loan.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ user.userid }}">
+                            <label>S.No:</label>
+                            <input type="number" name="sno" value="{{ loan.sno }}" required>
+                            <label>Bank Name:</label>
+                            <input type="text" name="bankname" value="{{ loan.bank_name }}" required>
+                            <label>IFSC:</label>
+                            <input type="text" name="ifsc" value="{{ loan.ifsc }}" required>
+                            <label>Product:</label>
+                            <input type="text" name="product" value="{{ loan.product }}" required>
+                            <label>Account:</label>
+                            <input type="number" name="account" value="{{ loan.account }}" required>
+                            <label>Duration:</label>
+                            <input type="text" name="duration" value="{{ loan.duration }}" required>
+                            <label>ROI:</label>
+                            <input type="text" name="ROI" value="{{ loan.ROI }}" required>
+                            <label>Date of Sanction:</label>
+                            <input type="date" name="Date_of_sanction" value="{{ loan.Date_of_sanction }}" required>
+                            <label>Loan Amount:</label>
+                            <input type="number" name="loan_amount" value="{{ loan.loan_amount }}" required>
+                            <label>EMI Amount:</label>
+                            <input type="number" name="emi_amount" value="{{ loan.emi_amount }}" required>
+                            <label>Date of First EMI:</label>
+                            <input type="date" name="date_of_first_emi" value="{{ loan.date_of_first_emi }}" required>
+                            <label>Date of Last EMI:</label>
+                            <input type="date" name="date_of_last_emi" value="{{ loan.date_of_last_emi }}" required>
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+<button class="add-btn" onclick="openModal('addPersonalLoanModal')">Add Personal Loan</button>
+    
+        <!-- Modal for Adding Personal Loan -->
+        <div id="addPersonalLoanModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('addPersonalLoanModal')">&times;</span>
+		<h3>Add Personal Loam</h3>
+                <form action="{% url 'add-personal-loan' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>S.No:</label>
+                    <input type="number" name="sno" placeholder="Enter Serial No" required>
+                    <label>Bank Name:</label>
+                    <input type="text" name="bank_name" placeholder="Bank Name" required>
+                    <label>IFSC:</label>
+                    <input type="text" name="ifsc" placeholder="IFSC Code" required>
+                    <label>Product:</label>
+                    <input type="text" name="product" placeholder="Product" required>
+                    <label>Account:</label>
+                    <input type="number" name="account" placeholder="Account No" required>
+                    <label>Duration:</label>
+                    <input type="text" name="duration" placeholder="Duration" required>
+                    <label>ROI:</label>
+                    <input type="text" name="ROI" placeholder="Rate of Interest" required>
+                    <label>Date of Sanction:</label>
+                    <input type="date" name="Date_of_sanction" required>
+                    <label>Loan Amount:</label>
+                    <input type="number" name="loan_amount" placeholder="Loan Amount" required>
+                    <label>EMI Amount:</label>
+                    <input type="number" name="emi_amount" placeholder="EMI Amount" required>
+                    <label>Date of First EMI:</label>
+                    <input type="date" name="date_of_first_emi" required>
+                    <label>Date of Last EMI:</label>
+                    <input type="date" name="date_of_last_emi" required>
+                    <button type="submit">Add Loan</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gold Loan -->
+        <h4>Gold Loan Details</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">IFSC Code</th>
+                    <th scope="col">Product Desciption</th>
+                    <th scope="col">Loan Account Number</th>
+                    <th scope="col">Loan Amount</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">ROI</th>
+                    <th scope="col">Date of Sanction</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in gold %}
+                <tr>
+                    <td>{{ loan.sno }}</td>
+                    <td>{{ loan.bank_name }}</td>
+                    <td>{{ loan.ifsc }}</td>
+                    <td>{{ loan.product }}</td>
+                    <td>{{ loan.account }}</td>
+                    <td>{{ loan.loan_amount }}</td>
+                    <td>{{ loan.duration }}</td>
+                    <td>{{ loan.ROI }}</td>
+                    <td>{{ loan.Date_of_sanction }}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openModal('editGoldLoanModal{{ loan.id }}')">Edit</button>
+                        <button class="delete-btn" onclick="confirmDeleteGoldLoan('{{ loan.id }}', 'add-gold_loan')">Delete</button>
+                    </td>
+                </tr>
+    
+                <!-- Modal for Editing Gold Loan -->
+                <div id="editGoldLoanModal{{ loan.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('editGoldLoanModal{{ loan.id }}')">&times;</span>
+                        <h3>Edit Gold Loan</h3>
+                        <form action="{% url 'edit-gold-loan' loan.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ user.userid }}">
+                            <label>S.No:</label>
+                            <input type="number" name="sno" value="{{ loan.sno }}" required>
+                            <label>Bank Name:</label>
+                            <input type="text" name="bank_name" value="{{ loan.bank_name }}" required>
+                            <label>IFSC:</label>
+                            <input type="text" name="ifsc" value="{{ loan.ifsc }}" required>
+                            <label>Product:</label>
+                            <input type="text" name="product" value="{{ loan.product }}" required>
+                            <label>Account:</label>
+                            <input type="number" name="account" value="{{ loan.account }}" required>
+                            <label>Duration:</label>
+                            <input type="text" name="duration" value="{{ loan.duration }}" required>
+                            <label>ROI:</label>
+                            <input type="text" name="ROI" value="{{ loan.ROI }}" required>
+                            <label>Date of Sanction:</label>
+                            <input type="date" name="Date_of_sanction" value="{{ loan.Date_of_sanction }}" required>
+                            <label>Loan Amount:</label>
+                            <input type="number" name="loan_amount" value="{{ loan.loan_amount }}" required>
+                            <label>EMI Amount:</label>
+                            <input type="number" name="emi_amount" value="{{ loan.emi_amount }}" required>
+                            <label>Date of First EMI:</label>
+                            <input type="date" name="date_of_first_emi" value="{{ loan.date_of_first_emi }}" required>
+                            <label>Date of Last EMI:</label>
+                            <input type="date" name="date_of_last_emi" value="{{ loan.date_of_last_emi }}" required>
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    
+        <button class="add-btn" onclick="openModal('addGoldLoanModal')">Add Gold Loan</button>
+    
+        <!-- Modal for Adding Gold Loan -->
+        <div id="addGoldLoanModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('addGoldLoanModal')">&times;</span>
+                <form action="{% url 'add-gold-loan' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>S.No:</label>
+                    <input type="number" name="sno" placeholder="Enter Serial No" required>
+                    <label>Bank Name:</label>
+                    <input type="text" name="bank_name" placeholder="Bank Name" required>
+                    <label>IFSC:</label>
+                    <input type="text" name="ifsc" placeholder="IFSC Code" required>
+                    <label>Product:</label>
+                    <input type="text" name="product" placeholder="Product" required>
+                    <label>Account:</label>
+                    <input type="number" name="account" placeholder="Account No" required>
+                    <label>Duration:</label>
+                    <input type="text" name="duration" placeholder="Duration" required>
+                    <label>ROI:</label>
+                    <input type="text" name="ROI" placeholder="Rate of Interest" required>
+                    <label>Date of Sanction:</label>
+                    <input type="date" name="Date_of_sanction" required>
+                    <label>Loan Amount:</label>
+                    <input type="number" name="loan_amount" placeholder="Loan Amount" required>
+                    <label>EMI Amount:</label>
+                    <input type="number" name="emi_amount" placeholder="EMI Amount" required>
+                    <label>Date of First EMI:</label>
+                    <input type="date" name="date_of_first_emi" required>
+                    <label>Date of Last EMI:</label>
+                    <input type="date" name="date_of_last_emi" required>
+                    <button type="submit">Add Loan</button>
+                </form>
+            </div>            
+        </div>
+    
+        
+        <!-- House Loan Section -->
+<h4>House Loan Details</h4>
+<table class="table table-hover table-responsive">
+    <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Account</th>
+        <th scope="col">Product Desciption</th>
+        <th scope="col">Name</th>
+        <th scope="col">Drawing Power</th>
+        <th scope="col">Outstandng Amount</th>
+        <th scope="col">ROI</th>
+        <th scope="col">Term</th>
+        <th scope="col">EMI Amount</th>
+        <th scope="col">Actions</th>
+    </tr>
+    {% for loan in house %}
+    <tr>
+        <td>{{ loan.sno }}</td>
+        <td>{{ loan.account }}</td>
+        <td>{{ loan.product }}</td>
+        <td>{{ loan.name }}</td>
+        <td>{{ loan.power }}</td>
+        <td>{{ loan.amount }}</td>
+        <td>{{ loan.ROI }}</td>
+        <td>{{ loan.term }}</td>
+        <td>{{ loan.emi }}</td>
+        <td>
+            <button class="edit-btn" onclick="openModal('editHouseLoanModal{{ loan.id }}')">Edit</button>
+            <button class="delete-btn" onclick="confirmDeleteHouseLoan('{{ loan.id }}', 'add_house_loan')">Delete</button>
+        </td>
+    </tr>
+
+    <!-- Modal for Editing House Loan -->
+    <div id="editHouseLoanModal{{ loan.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editHouseLoanModal{{ loan.id }}')">&times;</span>
+            <h3>Edit House Loan</h3>
+            <form action="{% url 'edit-house-loan' loan.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <label>S.No:</label>
+                <input type="number" name="sno" value="{{ loan.sno }}">
+                <label>Account:</label>
+                <input type="number" name="account" value="{{ loan.account }}">
+                <label>Product:</label>
+                <input type="text" name="product" value="{{ loan.product }}">
+                <label>Name:</label>
+                <input type="text" name="name" value="{{ loan.name }}">
+                <label>Power:</label>
+                <input type="text" name="power" value="{{ loan.power }}">
+                <label>Amount:</label>
+                <input type="number" name="amount" value="{{ loan.amount }}">
+                <label>ROI:</label>
+                <input type="text" name="ROI" value="{{ loan.ROI }}">
+                <label>Term</label>
+                <input type="text" name="term" value="{{ loan.term }}">
+                <label>EMI Amount:</label>
+                <input type="number" name="emi" value="{{ loan.emi }}">
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+<button class="add-btn" onclick="openModal('addHouseLoanModal')">Add House Loan</button>
+<!-- Modal for Adding House Loan -->
+<div id="addHouseLoanModal" class="modal">
+    <div class="modal-content">
+        <h3>Add House Loam</h3>
+        <span class="close" onclick="closeModal('addHouseLoanModal')">&times;</span>
+        <form action="{% url 'add-house-loan' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+            <label>S.No:</label>
+            <input type="number" name="sno" placeholder="Enter Serial No" required>
+            <label>Account:</label>
+            <input type="number" name="account" placeholder="Account No" required>
+            <label>Product Description:</label>
+            <input type="text" name="product" placeholder="Product Description" required>
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="name" required>
+            <label>Power:</label>
+            <input type="text" name="power" placeholder="Power" required>
+            <label>Amount:</label>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <label>ROI:</label>
+            <input type="text" name="ROI" placeholder="Rate of Interest" required>
+            <label>Term:</label>
+            <input type="text" name="term" placeholder="Term" required>
+            <label>EMI:</label>
+            <input type="number" name="emi" placeholder="EMI" required>
+            <button type="submit">Add Loan</button>
+        </form>
+    </div>
+</div>
+
+
+<h4>Vehicle Loan Details</h4>
+<table class="table table-hover table-responsive">
+    <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Vehicle Model</th>
+        <th scope="col">Vehicle Type</th>
+        <th scope="col">Engine Number</th>
+        <th scope="col">Chasis Number</th>
+        <th scope="col">Sanctioned Amount</th>
+        <th scope="col">Term</th>
+        <th scope="col">Actions</th>
+    </tr>
+    {% for loan in vehicle_loans %}
+    <tr>
+        <td>{{ loan.sno }}</td>
+        <td>{{ loan.company_name }}</td>
+        <td>{{ loan.vehicle_model }}</td>
+        <td>{{ loan.vehicle_type }}</td>
+        <td>{{ loan.engline_num }}</td>
+        <td>{{ loan.chasis_num }}</td>
+        <td>{{ loan.sanctioned_amout }}</td>
+        <td>{{ loan.term }}</td>
+        <td>
+            <button class="edit-btn" onclick="openModal('editVehicleLoanModal{{ loan.id }}')">Edit</button>
+            <button class="delete-btn" onclick="confirmDeleteVehicleLoan('{{ loan.id }}')">Delete</button>
+        </td>
+    </tr>
+
+    <!-- Modal for Editing Vehicle Loan -->
+    <div id="editVehicleLoanModal{{ loan.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editVehicleLoanModal{{ loan.id }}')">&times;</span>
+            <h3>Edit Vehicle Loan</h3>
+            <form action="{% url 'edit-vehicle-loan' loan.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <label>S.No:</label>
+                <input type="number" name="sno" value="{{ loan.sno }}">
+                <label>Company Name:</label>
+                <input type="text" name="company_name" value="{{ loan.company_name }}">
+                <label>Vehicle Model:</label>
+                <input type="number" name="vehicle_model" value="{{ loan.vehicle_model }}">
+                <label>Vehicle Type:</label>
+                <select name="vehicle_type">
+                    <option value="Two Wheeler" {% if loan.vehicle_type == "Two Wheeler" %}selected{% endif %}>Two Wheeler</option>
+                    <option value="Three Wheeler" {% if loan.vehicle_type == "Three Wheeler" %}selected{% endif %}>Three Wheeler</option>
+                    <option value="Four Wheeler" {% if loan.vehicle_type == "Four Wheeler" %}selected{% endif %}>Four Wheeler</option>
+                </select>
+                <label>Engine Number:</label>
+                <input type="number" name="engine_num" value="{{ loan.engline_num }}">
+                <label>Chasis Number:</label>
+                <input type="number" name="chasis_num" value="{{ loan.chasis_num }}">
+                <label>Sanctioned Amount:</label>
+                <input type="number" name="sanctioned_amount" value="{{ loan.sanctioned_amout }}">
+                <label>Term:</label>
+                <input type="number" name="term" value="{{ loan.term }}">
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+<button class="add-btn" onclick="openModal('addVehicleLoanModal')">Add Vehicle Loan</button>
+
+<!-- Modal for Adding Vehicle Loan -->
+<div id="addVehicleLoanModal" class="modal">
+    <div class="modal-content">
+        <h3>Add Vehicle Loan</h3>
+        <span class="close" onclick="closeModal('addVehicleLoanModal')">&times;</span>
+        <form action="{% url 'add-vehicle-loan' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+            <label>S.No:</label>
+            <input type="number" name="sno" placeholder="Enter Serial No" required>
+            <label>Company Name:</label>
+            <input type="text" name="company_name" placeholder="Company Name" required>
+            <label>Vehicle Model:</label>
+            <input type="number" name="vehicle_model" placeholder="Vehicle Model" required>
+            <label>Vehicle Type:</label>
+            <select name="vehicle_type" required>
+                <option value="Two Wheeler">Two Wheeler</option>
+                <option value="Three Wheeler">Three Wheeler</option>
+                <option value="Four Wheeler">Four Wheeler</option>
+            </select>
+            <label>Engine Number:</label>
+            <input type="number" name="engine_num" placeholder="Engine Number" required>
+            <label>Chasis Number:</label>
+            <input type="number" name="chasis_num" placeholder="Chasis Number" required>
+            <label>Sanctioned Amount:</label>
+            <input type="number" name="sanctioned_amount" placeholder="Sanctioned Amount" required>
+            <label>Term(Years):</label>
+            <input type="number" name="term" placeholder="Term/Duration in years" required>
+            <button type="submit">Add Loan</button>
+        </form>
+    </div>
+</div>
+
+    </div>
+
+    
+   
+    
+    <!-- Insurance Section -->
+    <!-- Life Insurance Details -->
+<div class="container insurance">
+    <h3>Insurance Details</h3>
+    <h4>Life Insurance</h4>
+<table class="table table-hover table-responsive">
+    <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Policy Holder Name</th>
+        <th scope="col">Policy Number</th>
+        <th scope="col">Company</th>
+        <th scope="col">Starting Date</th>
+        <th scope="col">Term</th>
+        <th scope="col">Premium</th>
+        <th scope="col">Sum Assured</th>
+        <th scope="col">Nominee Name</th>
+        <th scope="col">Actions</th>
+    </tr>
+    {% for insurance in life_insurances %}
+    <tr>
+        <td>{{ insurance.sno }}</td>
+        <td>{{ insurance.Policy_holder_name }}</td>
+        <td>{{ insurance.Policy_number }}</td>
+        <td>{{ insurance.Company }}</td>
+        <td>{{ insurance.starting_date }}</td>
+        <td>{{ insurance.term }}</td>
+        <td>{{ insurance.premium }}</td>
+        <td>{{ insurance.sum_assured }}</td>
+        <td>{{ insurance.nominee_name }}</td>
+        <td>
+            <button class="edit-btn" onclick="openModal('editLifeInsuranceModal{{ insurance.id }}')">Edit</button>
+            <button class="delete-btn" onclick="confirmDeleteLifeInsurance('{{ insurance.id }}')">Delete</button>
+        </td>
+    </tr>
+
+    <!-- Modal for Editing Life Insurance -->
+    <div id="editLifeInsuranceModal{{ insurance.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editLifeInsuranceModal{{ insurance.id }}')">&times;</span>
+            <h3>Edit Life Insurance</h3>
+            <form action="{% url 'edit-life-insurance' insurance.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <label>S.No:</label>
+                <input type="number" name="sno" value="{{ insurance.sno }}">
+                <label>Policy Holder Name:</label>
+                <input type="text" name="Policy_holder_name" value="{{ insurance.Policy_holder_name }}">
+                <label>Policy Number:</label>
+                <input type="number" name="Policy_number" value="{{ insurance.Policy_number }}">
+                <label>Company:</label>
+                <input type="text" name="Company" value="{{ insurance.Company }}">
+                <label>Starting Date:</label>
+                <input type="date" name="starting_date" value="{{ insurance.starting_date }}">
+                <label>Term:</label>
+                <input type="text" name="term" value="{{ insurance.term }}">
+                <label>Premium:</label>
+                <input type="number" step="0.01" name="premium" value="{{ insurance.premium }}">
+                <label>Sum Assured:</label>
+                <input type="number" step="0.01" name="sum_assured" value="{{ insurance.sum_assured }}">
+                <label>Nominee Name:</label>
+                <input type="text" name="nominee_name" value="{{ insurance.nominee_name }}">
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+<button class="add-btn" onclick="openModal('addLifeInsuranceModal')">Add Life Insurance</button>
+
+<!-- Modal for Adding Life Insurance -->
+<div id="addLifeInsuranceModal" class="modal">
+    <div class="modal-content">
+        <h3>Add Life Insurance</h3>
+        <span class="close" onclick="closeModal('addLifeInsuranceModal')">&times;</span>
+        <form action="{% url 'add-life-insurance' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+            <label>S.No:</label>
+            <input type="number" name="sno" placeholder="Enter Serial No" required>
+            <label>Policy Holder Name:</label>
+            <input type="text" name="Policy_holder_name" placeholder="Policy Holder Name" required>
+            <label>Policy Number:</label>
+            <input type="number" name="Policy_number" placeholder="Policy Number" required>
+            <label>Company:</label>
+            <input type="text" name="Company" placeholder="Company" required>
+            <label>Starting Date:</label>
+            <input type="date" name="starting_date" required>
+            <label>Term:</label>
+            <input type="text" name="term" placeholder="Term" required>
+            <label>Premium:</label>
+            <input type="number" step="0.01" name="premium" placeholder="Premium" required>
+            <label>Sum Assured:</label>
+            <input type="number" step="0.01" name="sum_assured" placeholder="Sum Assured" required>
+            <label>Nominee Name:</label>
+            <input type="text" name="nominee_name" placeholder="Nominee Name" required>
+            <button type="submit">Add Insurance</button>
+        </form>
+    </div>
+</div>
+
+
+    <h4>Health Insurance</h4>
+<table class="table table-hover table-responsive">
+    <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Insurance Company</th>
+        <th scope="col">Employee Code</th>
+        <th scope="col">Policy Number</th>
+        <th scope="col">Validity Period From</th>
+        <th scope="col">Validity Period To</th>
+        <th scope="col">Beneficiary Name</th>
+        <th scope="col">Member ID</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">Relation</th>
+        <th scope="col">Family Sum Assured</th>
+        <th scope="col">Balance Sum Assured</th>
+        <th scope="col">Actions</th>
+    </tr>
+    {% for insurance in health_insurances %}
+    <tr>
+        <td>{{ insurance.sno }}</td>
+        <td>{{ insurance.insurance_company }}</td>
+        <td>{{ insurance.employee_code }}</td>
+        <td>{{ insurance.policy_number }}</td>
+        <td>{{ insurance.validity_period_from }}</td>
+        <td>{{ insurance.validity_period_to }}</td>
+        <td>{{ insurance.benificiary_name }}</td>
+        <td>{{ insurance.member_id }}</td>
+        <td>{{ insurance.dob }}</td>
+        <td>{{ insurance.relation }}</td>
+        <td>{{ insurance.family_sum_assured }}</td>
+        <td>{{ insurance.balance_sum_assured }}</td>
+        <td>
+            <button class="edit-btn" onclick="openModal('editHealthInsuranceModal{{ insurance.id }}')">Edit</button>
+            <button class="delete-btn" onclick="confirmDeleteHealthInsurance('{{ insurance.id }}')">Delete</button>
+        </td>
+    </tr>
+
+    <!-- Modal for Editing Health Insurance -->
+    <div id="editHealthInsuranceModal{{ insurance.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editHealthInsuranceModal{{ insurance.id }}')">&times;</span>
+            <h3>Edit Health Insurance</h3>
+            <form action="{% url 'edit-health-insurance' insurance.id %}" method="post">
+                {% csrf_token %}
+                <label for="sno">S.No:</label>
+                <input type="number" name="sno" value="{{ insurance.sno }}" required><br>
+                <label for="insurance_company">Insurance Company:</label>
+                <input type="text" name="insurance_company" value="{{ insurance.insurance_company }}" required><br>
+                <label for="employee_code">Employee Code:</label>
+                <input type="text" name="employee_code" value="{{ insurance.employee_code }}"><br>
+                <label for="policy_number">Policy Number:</label>
+                <input type="number" name="policy_number" value="{{ insurance.policy_number }}"><br>
+                <label for="validity_period_from">Validity Period From:</label>
+                <input type="date" name="validity_period_from" value="{{ insurance.validity_period_from }}"><br>
+                <label for="validity_period_to">Validity Period To:</label>
+                <input type="date" name="validity_period_to" value="{{ insurance.validity_period_to }}"><br>
+                <label for="benificiary_name">Beneficiary Name:</label>
+                <input type="text" name="benificiary_name" value="{{ insurance.benificiary_name }}" required><br>
+                <label for="member_id">Member ID:</label>
+                <input type="number" name="member_id" value="{{ insurance.member_id }}"><br>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" value="{{ insurance.dob }}"><br>
+                <label for="relation">Relation:</label>
+                <select name="relation">
+                    <option value="Self" {% if insurance.relation == "Self" %}selected{% endif %}>Self</option>
+                    <option value="Father" {% if insurance.relation == "Father" %}selected{% endif %}>Father</option>
+                    <option value="Mother" {% if insurance.relation == "Mother" %}selected{% endif %}>Mother</option>
+                    <option value="Son" {% if insurance.relation == "Son" %}selected{% endif %}>Son</option>
+                    <option value="Daughter" {% if insurance.relation == "Daughter" %}selected{% endif %}>Daughter</option>
+                </select><br>
+                <label for="family_sum_assured">Family Sum Assured:</label>
+                <input type="number" name="family_sum_assured" value="{{ insurance.family_sum_assured }}"><br>
+                <label for="balance_sum_assured">Balance Sum Assured:</label>
+                <input type="number" name="balance_sum_assured" value="{{ insurance.balance_sum_assured }}"><br>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</table>
+
+<button class="add-btn" onclick="openModal('addHealthInsuranceModal')">Add Health Insurance</button>
+
+<!-- Modal for Adding Health Insurance -->
+<div id="addHealthInsuranceModal" class="modal">
+    <div class="modal-content">
+        <h3>Add Health Insurance</h3>
+        <span class="close" onclick="closeModal('addHealthInsuranceModal')">&times;</span>
+        <form action="{% url 'add-health-insurance' %}" method="post">
+            {% csrf_token %}
+            <label for="sno">S.No:</label>
+            <input type="number" name="sno" required><br>
+            <label for="insurance_company">Insurance Company:</label>
+            <input type="text" name="insurance_company" required><br>
+            <label for="employee_code">Employee Code:</label>
+            <input type="text" name="employee_code"><br>
+            <label for="policy_number">Policy Number:</label>
+            <input type="number" name="policy_number"><br>
+            <label for="validity_period_from">Validity Period From:</label>
+            <input type="date" name="validity_period_from"><br>
+            <label for="validity_period_to">Validity Period To:</label>
+            <input type="date" name="validity_period_to"><br>
+            <label for="benificiary_name">Beneficiary Name:</label>
+            <input type="text" name="benificiary_name" required><br>
+            <label for="member_id">Member ID:</label>
+            <input type="number" name="member_id"><br>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" name="dob"><br>
+            <label for="relation">Relation:</label>
+            <select name="relation">
+                <option value="Self">Self</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+            </select><br>
+            <label for="family_sum_assured">Family Sum Assured:</label>
+            <input type="number" name="family_sum_assured"><br>
+            <label for="balance_sum_assured">Balance Sum Assured:</label>
+            <input type="number" name="balance_sum_assured"><br>
+            <button type="submit">Add Health Insurance</button>
+        </form>
+    </div>
+</div>
+
+
+    <h4>Term Insurance</h4>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Policy Holder Name</th>
+            <th scope="col">Policy Number</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Premium Payment Term</th>
+            <th scope="col">Premium Payment Mode</th>
+            <th scope="col">Last Premium Date</th>
+            <th scope="col">Critical Illness Benefit</th>
+            <th scope="col">Critical Illness Sum Assured</th>
+            <th scope="col">Accidental Death Benefit</th>
+            <th scope="col">Accidental Death Benefit Sum Assured</th>
+            <th scope="col">Return of Premium</th>
+            <th scope="col">Joint Life Cover</th>
+            <th scope="col">Policy Term</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Premium Amount</th>
+            <th scope="col">Sum Assured</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for insurance in term_insurances %}
+        <tr>
+            <td>{{ insurance.sno }}</td>
+            <td>{{ insurance.policy_holder_name }}</td>
+            <td>{{ insurance.ploicy_no }}</td>
+            <td>{{ insurance.date_of_commencement_of_risk }}</td>
+            <td>{{ insurance.premium_payment_term }}</td>
+            <td>{{ insurance.premium_payment_mode }}</td>
+            <td>{{ insurance.last_premium_date }}</td>
+            <td>{{ insurance.critical_illness_beifit }}</td>
+            <td>{{ insurance.critical_illness_sumassured }}</td>
+            <td>{{ insurance.accidental_death_benifit }}</td>
+            <td>{{ insurance.accdental_death_beifit_sum_assured }}</td>
+            <td>{{ insurance.return_of_premium }}</td>
+            <td>{{ insurance.joint_life_cover }}</td>
+            <td>{{ insurance.policy_term }}</td>
+            <td>{{ insurance.due_date }}</td>
+            <td>{{ insurance.premium_amount }}</td>
+            <td>{{ insurance.sum_assured }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editTermInsuranceModal{{ insurance.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteTermInsurance('{{ insurance.id }}')">Delete</button>
+            </td>
+        </tr>
+    
+        <!-- Modal for Editing Term Insurance -->
+        <div id="editTermInsuranceModal{{ insurance.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editTermInsuranceModal{{ insurance.id }}')">&times;</span>
+                <h3>Edit Term Insurance</h3>
+                <form action="{% url 'edit-term-insurance' insurance.id %}" method="post">
+                    {% csrf_token %}
+                    <label for="sno">S.No:</label>
+                    <input type="number" name="sno" value="{{ insurance.sno }}" required><br>
+                    <label for="policy_holder_name">Policy Holder Name:</label>
+                    <input type="text" name="policy_holder_name" value="{{ insurance.policy_holder_name }}" required><br>
+                    <label for="ploicy_no">Policy Number:</label>
+                    <input type="number" name="ploicy_no" value="{{ insurance.ploicy_no }}" required><br>
+                    <label for="date_of_commencement_of_risk">Start Date:</label>
+                    <input type="date" name="date_of_commencement_of_risk" value="{{ insurance.date_of_commencement_of_risk }}"><br>
+                    <label for="premium_payment_term">Premium Payment Term:</label>
+                    <input type="text" name="premium_payment_term" value="{{ insurance.premium_payment_term }}"><br>
+                    <label for="premium_payment_mode">Premium Payment Mode:</label>
+                    <select name="premium_payment_mode">
+                        <option value="monthly" {% if insurance.premium_payment_mode == "monthly" %}selected{% endif %}>Monthly</option>
+                        <option value="yearly" {% if insurance.premium_payment_mode == "yearly" %}selected{% endif %}>Yearly</option>
+                    </select><br>
+                    <label for="last_premium_date">Last Premium Date:</label>
+                    <input type="date" name="last_premium_date" value="{{ insurance.last_premium_date }}"><br>
+                    <label for="critical_illness_beifit">Critical Illness Benefit:</label>
+                    <select name="critical_illness_beifit">
+                        <option value="yes" {% if insurance.critical_illness_beifit == "yes" %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if insurance.critical_illness_beifit == "no" %}selected{% endif %}>No</option>
+                    </select><br>
+                    <label for="critical_illness_sumassured">Critical Illness Sum Assured:</label>
+                    <input type="number" name="critical_illness_sumassured" value="{{ insurance.critical_illness_sumassured }}"><br>
+                    <label for="accidental_death_benifit">Accidental Death Benefit:</label>
+                    <select name="accidental_death_benifit">
+                        <option value="yes" {% if insurance.accidental_death_benifit == "yes" %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if insurance.accidental_death_benifit == "no" %}selected{% endif %}>No</option>
+                    </select><br>
+                    <label for="accdental_death_beifit_sum_assured">Accidental Death Benefit Sum Assured:</label>
+                    <input type="number" name="accdental_death_beifit_sum_assured" value="{{ insurance.accdental_death_beifit_sum_assured }}"><br>
+                    <label for="return_of_premium">Return of Premium:</label>
+                    <select name="return_of_premium">
+                        <option value="yes" {% if insurance.return_of_premium == "yes" %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if insurance.return_of_premium == "no" %}selected{% endif %}>No</option>
+                    </select><br>
+                    <label for="joint_life_cover">Joint Life Cover:</label>
+                    <select name="joint_life_cover">
+                        <option value="yes" {% if insurance.joint_life_cover == "yes" %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if insurance.joint_life_cover == "no" %}selected{% endif %}>No</option>
+                    </select><br>
+                    <label for="policy_term">Policy Term:</label>
+                    <input type="number" name="policy_term" value="{{ insurance.policy_term }}"><br>
+                    <label for="due_date">Due Date:</label>
+                    <input type="date" name="due_date" value="{{ insurance.due_date }}"><br>
+                    <label for="premium_amount">Premium Amount:</label>
+                    <input type="number" name="premium_amount" value="{{ insurance.premium_amount }}"><br>
+                    <label for="sum_assured">Sum Assured:</label>
+                    <input type="number" name="sum_assured" value="{{ insurance.sum_assured }}"><br>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </table>
+    
+    <button class="add-btn" onclick="openModal('addTermInsuranceModal')">Add Term Insurance</button>
+    
+    <!-- Modal for Adding Term Insurance -->
+    <div id="addTermInsuranceModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Term Insurance</h3>
+            <span class="close" onclick="closeModal('addTermInsuranceModal')">&times;</span>
+            <form action="{% url 'add-term-insurance' %}" method="post">
+                {% csrf_token %}
+                <label for="sno">S.No:</label>
+                <input type="number" name="sno" required><br>
+                <label for="policy_holder_name">Policy Holder Name:</label>
+                <input type="text" name="policy_holder_name" required><br>
+                <label for="ploicy_no">Policy Number:</label>
+                <input type="number" name="ploicy_no" required><br>
+                <label for="date_of_commencement_of_risk">Start Date:</label>
+                <input type="date" name="date_of_commencement_of_risk"><br>
+                <label for="premium_payment_term">Premium Payment Term:</label>
+                <input type="text" name="premium_payment_term"><br>
+                <label for="premium_payment_mode">Premium Payment Mode:</label>
+                <select name="premium_payment_mode">
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select><br>
+                <label for="last_premium_date">Last Premium Date:</label>
+                <input type="date" name="last_premium_date"><br>
+                <label for="critical_illness_beifit">Critical Illness Benefit:</label>
+                <select name="critical_illness_beifit">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br>
+                <label for="critical_illness_sumassured">Critical Illness Sum Assured:</label>
+                <input type="number" name="critical_illness_sumassured"><br>
+                <label for="accidental_death_benifit">Accidental Death Benefit:</label>
+                <select name="accidental_death_benifit">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br>
+                <label for="accdental_death_beifit_sum_assured">Accidental Death Benefit Sum Assured:</label>
+                <input type="number" name="accdental_death_beifit_sum_assured"><br>
+                <label for="return_of_premium">Return of Premium:</label>
+                <select name="return_of_premium">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br>
+                <label for="joint_life_cover">Joint Life Cover:</label>
+                <select name="joint_life_cover">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br>
+                <label for="policy_term">Policy Term:</label>
+                <input type="number" name="policy_term"><br>
+                <label for="due_date">Due Date:</label>
+                <input type="date" name="due_date"><br>
+                <label for="premium_amount">Premium Amount:</label>
+                <input type="number" name="premium_amount"><br>
+                <label for="sum_assured">Sum Assured:</label>
+                <input type="number" name="sum_assured"><br>
+                <button type="submit">Add Term Insurance</button>
+            </form>
+        </div>
+    </div>
+    
+
+
+
+    <h4>Vehicle Insurance</h4>
+        <table class="table table-hover table-responsive">
+            <tr>
+                <th>S.No</th>
+                <th>Policy Number</th>
+                <th>Company Name</th>
+                <th>Name of Insured</th>
+                <th>Registration Number</th>
+                <th>Engine Number</th>
+                <th>Chasis Number</th>
+                <th>RTA Location</th>
+                <th>Vehicle Make & Model</th>
+                <th>Period of Insurance From</th>
+                <th>Period of Insurance To</th>
+                <th>Agent Number</th>
+                <th>Actions</th>
+            </tr>
+            {% for i in vehinsurances %}
+            <tr>
+                <td>{{ i.sno }}</td>
+                <td>{{ i.policy_number }}</td>
+                <td>{{ i.company_name }}</td>
+                <td>{{ i.Name_of_insured }}</td>
+                <td>{{ i.reg_no }}</td>
+                <td>{{ i.engine_no }}</td>
+                <td>{{ i.chasis_no }}</td>
+                <td>{{ i.RTA_location }}</td>
+                <td>{{ i.Vehiclemake_model }}</td>
+                <td>{{ i.Period_of_insurance_from }}</td>
+                <td>{{ i.Period_of_insurance_to }}</td>
+                <td>{{ i.Agent_no }}</td>
+                <td>
+                    <button class="edit-btn" onclick="openModal('editInsuranceModal{{ i.id }}')">Edit</button>
+                    <button class="delete-btn" onclick="confirmDeleteInsurance('{{ i.id }}', 'vehicle')">Delete</button>
+                </td>
+            </tr>
+    
+            <!-- Modal for Editing Insurance -->
+            <div id="editInsuranceModal{{ i.id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('editInsuranceModal{{ i.id }}')">&times;</span>
+                    <h3>Edit Vehicle Insurance</h3>
+                    <form action="{% url 'edit-veh-insurance' i.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="userid" value="{{ user.userid }}">
+                        <label>S.No:</label>
+                        <input type="number" name="sno" value="{{ i.sno }}" required>
+                        
+                        <label>Policy Number:</label>
+                        <input type="number" name="policy_num" value="{{ i.policy_number }}" required>
+                        
+                        <label>Company Name:</label>
+                        <input type="text" name="company_name" value="{{ i.company_name }}" required>
+                        
+                        <label>Name of Insured:</label>
+                        <input type="text" name="name_of_insured" value="{{ i.Name_of_insured }}" required>
+                        
+                        <label>Registration Number:</label>
+                        <input type="text" name="reg_no" value="{{ i.reg_no }}" required>
+                        
+                        <label>Engine Number:</label>
+                        <input type="number" name="engine_no" value="{{ i.engine_no }}" required>
+                        
+                        <label>Chasis Number:</label>
+                        <input type="number" name="chasis_no" value="{{ i.chasis_no }}" required>
+                        
+                        <label>RTA Location:</label>
+                        <input type="text" name="rta_loc" value="{{ i.RTA_location }}" required>
+                        
+                        <label>Vehicle Make & Model:</label>
+                        <input type="text" name="vehicle_make_model" value="{{ i.Vehiclemake_model }}" required>
+                        
+                        <label>Period of Insurance From:</label>
+                        <input type="date" name="from" value="{{ i.Period_of_insurance_from }}" required>
+                        
+                        <label>Period of Insurance To:</label>
+                        <input type="date" name="to" value="{{ i.Period_of_insurance_to }}" required>
+                        
+                        <label>Agent Number:</label>
+                        <input type="number" name="agent_no" value="{{ i.Agent_no }}" required>
+                        
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </table>
+    
+        
+        <button class="add-btn" onclick="openModal('addVehicleInsuranceModal')">Add Vehicle Insurance</button>
+        <!-- Modal for Adding Vehicle Insurance -->
+        <div id="addVehicleInsuranceModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('addVehicleInsuranceModal')">&times;</span>
+                <h3>Add Vehicle Insurance</h3>
+                <form action="{% url 'add-veh-insurance' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    
+                    <label>S.No:</label>
+                    <input type="number" name="sno" required>
+                    
+                    <label>Policy Number:</label>
+                    <input type="number" name="policy_num" required>
+                    
+                    <label>Company Name:</label>
+                    <input type="text" name="company_name" required>
+                    
+                    <label>Name of Insured:</label>
+                    <input type="text" name="name_of_insured" required>
+                    
+                    <label>Registration Number:</label>
+                    <input type="text" name="reg_no" required>
+                    
+                    <label>Engine Number:</label>
+                    <input type="number" name="engine_no" required>
+                    
+                    <label>Chasis Number:</label>
+                    <input type="number" name="chasis_no" required>
+                    
+                    <label>RTA Location:</label>
+                    <input type="text" name="rta_loc" required>
+                    
+                    <label>Vehicle Make & Model:</label>
+                    <input type="text" name="vehicle_make_model" required>
+                    
+                    <label>Period of Insurance From:</label>
+                    <input type="date" name="from" required>
+                    
+                    <label>Period of Insurance To:</label>
+                    <input type="date" name="to" required>
+                    
+                    <label>Agent Number:</label>
+                    <input type="number" name="agent_no" required>
+                    
+                    <button type="submit">Add Insurance</button>
+                </form>
+            </div>
+        </div>
+
+</div>
+
+    
+
+    
+    <!-- Properties Details -->
+<div class="container properties">
+    <h3>Properties Details</h3>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Type</th>
+            <th scope="col">Area <p>(eg:2 Acres/3 Cents/50 Yards)</p></th>
+            <th scope="col">Address</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for property in properties %}
+        <tr>
+            <td>{{ property.sno }}</td>
+            <td>{{ property.property_type }}</td>
+            <td>{{ property.area }}</td>
+            <td>{{ property.address }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editPropertyModal{{ property.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteProperty('{{ property.id }}', 'property')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Property -->
+        <div id="editPropertyModal{{ property.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editPropertyModal{{ property.id }}')">&times;</span>
+                <h3>Edit Property</h3>
+                <form action="{% url 'edit-property' property.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <input type="number" name="sno" value="{{ property.sno }}">
+                    <label for="property_type">Property Type</label>
+                    <select name="property_type">
+                        <option value="land" {% if property.property_type == "land" %}selected{% endif %}>Land</option>
+                        <option value="house" {% if property.property_type == "house" %}selected{% endif %}>House</option>
+                        <option value="flat" {% if property.property_type == "flat" %}selected{% endif %}>Flat</option>
+                        <option value="plots" {% if property.property_type == "plots" %}selected{% endif %}>Plot/Sites</option>
+                    </select>
+                    <label>Area:</label>
+                    <input type="text" name="area" value="{{ property.area }}">
+                    <label>Address:</label>
+                    <input type="text" name="address" value="{{ property.address }}">
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        <button class="add-btn" onclick="openModal('addPropertyModal')">Add Property</button>
+    </table>
+</div>
+
+<!-- Modal for Adding Property -->
+<div id="addPropertyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addPropertyModal')">&times;</span>
+        <h3>Add Property</h3>
+        <form action="{% url 'properties' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="userid" value="{{ user.userid }}">
+            <input type="number" name="sno" placeholder="Serial Number">
+            <label for="property_type">Property Type</label>
+            <select name="property_type" required>
+                <option value="" disabled selected>Select Property Type</option>
+                <option value="land">Land</option>
+                <option value="house">House</option>
+                <option value="flat">Flat</option>
+                <option value="plots">Plot/Sites</option>
+            </select>
+            <label>Area:</label>
+            <input type="text" name="area" placeholder="Area with units" required>
+            <label>Address:</label>
+            <input type="text" name="address" placeholder="Address" required>
+            <button type="submit">Add Property</button>
+        </form>
+    </div>
+</div>
+
+
+    <!-- Investment Details -->
+<div class="container investment">
+    <h4>Stock Investment Details</h4>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Account Holder Name</th>
+            <th scope="col">User ID</th>
+            <th scope="col">Demat Account No</th>
+            <th scope="col">Platform</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">No of Shares</th>
+            <th scope="col">Avg Buying Price</th>
+            <th scope="col">Amount Invested</th>
+            <th scope="col">Date Of Investment</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for investment in stockinvestments %}
+        <tr>
+            <td>{{ investment.sno }}</td>
+            <td>{{ investment.name }}</td>
+            <td>{{ investment.ursid }}</td>
+            <td>{{ investment.demat }}</td>
+            <td>{{ investment.platform }}</td>
+            <td>{{ investment.company }}</td>
+            <td>{{ investment.shares }}</td>
+            <td>{{ investment.buyprice }}</td>
+            <td>{{ investment.amount }}</td>
+            <td>{{ investment.date }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editInvestmentModal{{ investment.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteStockInvestment('{{ investment.id }}','stock-investment')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Investment -->
+        <div id="editInvestmentModal{{ investment.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editInvestmentModal{{ investment.id }}')">&times;</span>
+                <h3>Edit Investment</h3>
+                <form action="{% url 'edit-stock-invest' investment.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" value="{{ investment.sno }}" required>
+                    <label>Account Holder Name:</label>
+                    <input type="text" name="name" id="" value="{{investment.name}}">
+                    <label>User ID</label>
+                    <input type="text" name="usrid" value="{{ investment.usrid }}" required>
+                    <label>Demat Account No</label>
+                    <input type="text" name="demat" value="{{ investment.demat }}" required>
+                    <label>Platform</label>
+                    <input type="text" name="platform" value="{{ investment.platform }}" required>
+                    <label>Company Name</label>
+                    <input type="text" name="company" value="{{ investment.company }}" required>
+                    <label>No of Shares</label>
+                    <input type="number" name="shares" value="{{ investment.shares}}" required>
+                    <label>Avg Buying Price</label>
+                    <input type="number" name="buyprice" value="{{ investment.buyprice }}" required>
+                    <label>Amount</label>
+                    <input type="number" name="amount" value="{{ investment.amount }}" required>
+                    <label>Date of Investment</label>
+                    <input type="date" name="date" value="{{ investment.date }}" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </table>
+
+    <!-- Button to Open the Add Investment Modal -->
+    <button class="add-btn" onclick="openModal('addInvestmentModal')">Add Stock Investment</button>
+
+    <!-- Modal for Adding New Investment -->
+    <div id="addInvestmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addInvestmentModal')">&times;</span>
+            <h3>Add New Investment</h3>
+            <form action="{% url 'stock-investment' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" placeholder="Enter serial no" required>
+                    <label>Account Holder Name:</label>
+                    <input type="text" name="name" placeholder="Enter Name" required>
+                    <label>User ID</label>
+                    <input type="text" name="usrid" placeholder="Enter User ID"  required>
+                    <label>Demat Account No</label>
+                    <input type="text" name="demat" placeholder="Enter Demat Account no" required>
+                    <label>Platform</label>
+                    <input type="text" name="platform" placeholder="Enter Platform" required>
+                    <label>Company Name</label>
+                    <input type="text" name="company" placeholder="Enter Company" required>
+                    <label>No of Shares</label>
+                    <input type="number" name="shares" placeholder="Enter no of shares" required>
+                    <label>Avg Buying Price</label>
+                    <input type="number" name="buyprice" placeholder="Enter Avg buy price" required>
+                    <label>Amount</label>
+                    <input type="number" name="amount" placeholder="Enter Amount invested" required>
+                    <label>Date of Investment</label>
+                    <input type="date" name="date" required>
+                <button type="submit">Add Stock Investment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mutual Funds -->
+    <h4>Mutual Funds Details</h4>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Fund Name</th>
+            <th scope="col">invested_amount</th>
+            <th scope="col">lock_in_period</th>
+            <th scope="col">fundplan</th>
+            <th scope="col">type</th>
+            <th scope="col">platform</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for investment in fundsinvestments %}
+        <tr>
+            <td>{{ investment.sno }}</td>
+            <td>{{ investment.fund_name }}</td>
+            <td>{{ investment.invested_amount }}</td>
+            <td>{{ investment.lock_in_period }}</td>
+            <td>{{ investment.fundplan }}</td>
+            <td>{{ investment.type }}</td>
+            <td>{{ investment.platform }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editInvestmentFundModal{{ investment.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteFundInvestment('{{ investment.id }}','stock-investment')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Investment -->
+        <div id="editInvestmentFundModal{{ investment.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editInvestmentFundModal{{ investment.id }}')">&times;</span>
+                <h3>Edit Mutual Investment</h3>
+                <form action="{% url 'edit-fund-invest' investment.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" value="{{ investment.sno }}" required>
+                    <label>Fund Name:</label>
+                    <input type="text" name="name" id="" value="{{investment.fund_name}}">
+                    <label>invested_amount</label>
+                    <input type="text" name="amount" value="{{ investment.invested_amount }}" required>
+                    <label>lock_in_period</label>
+                    <input type="text" name="period" value="{{ investment.lock_in_period }}" required>
+                    <label>fundplan</label>
+                    <input type="text" name="fundplan" value="{{ investment.fundplan }}" required>
+                    <label>type</label>
+                    <input type="text" name="type" value="{{ investment.type }}" required>
+                    <label>platform</label>
+                    <input type="number" name="platform" value="{{ investment.platform}}" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </table>
+
+    <!-- Button to Open the Add Investment Modal -->
+    <button class="add-btn" onclick="openModal('addInvestmentModal')">Add Mutual Fund Investment</button>
+
+    <!-- Modal for Adding New Investment -->
+    <div id="addInvestmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addInvestmentModal')">&times;</span>
+            <h3>Add Mutual Fund Investment</h3>
+            <form action="{% url 'fund-investment' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" placeholder="Enter Serial no" required>
+                    <label>Fund Name:</label>
+                    <input type="text" name="name" id="" placeholder="Enter Fund Name" required>
+                    <label>invested_amount</label>
+                    <input type="text" name="amount" placeholder="Enter Invested Amount required" required>
+                    <label>lock_in_period</label>
+                    <input type="text" name="period" placeholder="Enter Lock in period" required>
+                    <label>fundplan</label>
+                    <input type="text" name="fundplan" placeholder="Enter Fund Plan" required>
+                    <label>type</label>
+                    <input type="text" name="type" placeholder="Enter type Of plan" required>
+                    <label>platform</label>
+                    <input type="number" name="platform" placeholder="Enter platform name" required>
+                <button type="submit">Add Stock Investment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Schemes Details -->
+<div class="container schemes">
+    <h3>Scheme Details</h3>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Scheme Type</th>
+            <th scope="col">Scheme Name</th>
+            <th scope="col">Account Holder Name</th>
+            <th scope="col">Account Number</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Term</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Maturity Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for scheme in schemes %}
+        <tr>
+            <td>{{ scheme.sno }}</td>
+            <td>{{ scheme.type }}</td>
+            <td>{{ scheme.name }}</td>
+            <td>{{ scheme.holder_name }}</td>
+            <td>{{ scheme.number }}</td>
+            <td>{{ scheme.amount }}</td>
+            <td>{{ scheme.term }}</td>
+            <td>{{ scheme.start_date }}</td>
+            <td>{{ scheme.end_date }}</td>
+            <td>{{ scheme.maturity_date }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editSchemeModal{{ scheme.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteScheme('{{ scheme.id }}','schemes')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Scheme -->
+        <div id="editSchemeModal{{ scheme.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editSchemeModal{{ scheme.id }}')">&times;</span>
+                <h3>Edit Scheme</h3>
+                <form action="{% url 'edit-schemes' scheme.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" value="{{ scheme.sno }}" required>
+                    <label>Scheme Type:</label>
+                    <select name="type" required>
+                        <option value="" disabled selected>Select Scheme Type</option>
+                        <option value="stategovernment">State Government</option>
+                        <option value="centralgovernment">Central Government</option>
+                        <option value="bank">Bank</option>
+                        <option value="postal">Postal</option>
+                        <option value="other">Others</option>
+                    </select>
+                    <label>Scheme Name:</label>
+                    <input type="text" name="name" value="{{ scheme.name }}" required>
+                    <label>Account Holder Name:</label>
+                    <input type="text" name="holder_name" value="{{ scheme.holder_name }}" required>
+                    <label>Account Number:</label>
+                    <input type="number" name="number" value="{{ scheme.number }}" required>
+                    <label>Amount:</label>
+                    <input type="number" name="amount" value="{{ scheme.amount }}" required>
+                    <label>Term:</label>
+                    <input type="text" name="term" value="{{ scheme.term }}" required>
+                    <label>Start Date:</label>
+                    <input type="date" name="start_date" value="{{ scheme.start_date }}" required>
+                    <label>End Date:</label>
+                    <input type="date" name="end_date" value="{{ scheme.end_date }}" required>
+                    <label>Maturity Date:</label>
+                    <input type="date" name="maturity_date" value="{{ scheme.maturity_date }}" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </table>
+
+    <!-- Button to Open the Add Scheme Modal -->
+    <button class="add-btn" onclick="openModal('addSchemeModal')">Add Scheme</button>
+
+    <!-- Modal for Adding New Scheme -->
+    <div id="addSchemeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addSchemeModal')">&times;</span>
+            <h3>Add New Scheme</h3>
+            <form action="{% url 'schemes' %}" method="post">
+                {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" value="{{ scheme.sno }}" required>
+                    <label>Scheme Type:</label>
+                    <select name="type" required>
+                        <option value="" disabled selected>Select Scheme Type</option>
+                        <option value="stategovernment">State Government</option>
+                        <option value="centralgovernment">Central Government</option>
+                        <option value="bank">Bank</option>
+                        <option value="postal">Postal</option>
+                        <option value="other">Others</option>
+                    </select>
+                    <label>Scheme Name:</label>
+                    <input type="text" name="name" placeholder="Enter Scheme Name" required>
+                    <label>Account Holder Name:</label>
+                    <input type="text" name="holder_name" placeholder="Enter Holder Name" required>
+                    <label>Account Number:</label>
+                    <input type="number" name="number" placeholder="Enter number" required>
+                    <label>Amount:</label>
+                    <input type="number" name="amount" placeholder="Enter Amount" required>
+                    <label>Term:</label>
+                    <input type="text" name="term" placeholder="Enter Term required">
+                    <label>Start Date:</label>
+                    <input type="date" name="start_date" placeholder="start_date" required>
+                    <label>End Date:</label>
+                    <input type="date" name="end_date" placeholder="End Date" required>
+                    <label>Maturity Date:</label>
+                    <input type="date" name="maturity_date" placeholder="maturity_date" required>
+                <button type="submit">Add Scheme</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Card Details -->
+<div class="container cards">
+    <h3>Card Details</h3>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Card Type</th>
+            <th scope="col">Name on Card</th>
+            <th scope="col">Card Number</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for card in cards %}
+        <tr>
+            <td>{{ card.sno }}</td>
+            <td>{{ card.type }}</td>
+            <td>{{ card.name }}</td>
+            <td>{{ card.card_num }}</td>
+            <td>
+                <button class="edit-btn" onclick="openModal('editCardModal{{ card.id }}')">Edit</button>
+                <button class="delete-btn" onclick="confirmDeleteCard('{{ card.id }}','card')">Delete</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Card -->
+        <div id="editCardModal{{ card.id }}" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editCardModal{{ card.id }}')">&times;</span>
+                <h3>Edit Card</h3>
+                <form action="{% url 'edit-card' card.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="userid" value="{{ user.userid }}">
+                    <label>Serial Number:</label>
+                    <input type="number" name="sno" value="{{ card.sno }}" required>
+                    <label>Card Type:</label>
+                    <input type="text" name="type" value="{{ card.type }}" required>
+                    <label>Card Name:</label>
+                    <input type="text" name="name" value="{{ card.name }}" required>
+                    <label>Card Number:</label>
+                    <input type="text" name="card_no" value="{{ card.card_num }}" required>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </table>
+
+    <!-- Button to Open the Add Card Modal -->
+    <button class="add-btn" onclick="openModal('addCardModal')">Add Card</button>
+
+    <!-- Modal for Adding New Card -->
+    <div id="addCardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addCardModal')">&times;</span>
+            <h3>Add New Card</h3>
+            <form action="{% url 'card' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <label>Serial Number:</label>
+                <input type="number" name="sno" placeholder="Serial Number" required>
+                <label>Card Type:</label>
+                <select name="type" required>
+                    <option value="" disabled selected>Select Card Type</option>
+                    <option value="credit">Credit</option>
+                    <option value="debit">Debit</option>
+                    <option value="pan card">Pan Card</option>
+                    <option value="ration card">Ration Card</option>
+                    <option value="aadhar card">Aadhar Card</option>
+                    <option value="driving licence">Driving Licence</option>
+                    <option value="vehicle card">Vehicle Card</option>
+                    <option value="ID card">ID Card</option>
+                    <option value="voter card">Voter Card</option>
+                    <option value="Warranty card">Warranty Card</option>
+                    <option value="other">Other</option>
+                </select>
+                <label>Name on Card:</label>
+                <input type="text" name="name" placeholder="Card Holder Name/Name on Card" required>
+                <label>Card Number:</label>
+                <input type="text" name="card_no" placeholder="Card Number" required>
+                <button type="submit">Add Card</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <div class="container documents">
+        <h3>Documents</h3>
+        <button class="add-btn" onclick="openModal('addDocModal')">Add Document</button>
+
+    <!-- Modal for Adding New Card -->
+    <div id="addDocModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addDocModal')">&times;</span>
+            <h3>Add New Document</h3>
+            <form action="{% url 'doc' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="userid" value="{{ user.userid }}">
+                <label>Serial Number:</label>
+                <input type="number" name="sno" placeholder="Serial Number" required>
+                <label>Document Name:</label>
+                <input type="text" name="name" placeholder="Enter Document Name" id="" required>
+                <label>Upload Document here</label>
+                <input type="file" name="doc" required>
+                <button type="submit">Add Document</button>
+            </form>
+        </div>
+    </div>
+
+    {% for i in docs %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ i.doc }}" alt="Card image cap">
+        <div class="card-body">
+            <h5>Sno:{{i.sno}}</h5>
+            <h5 class="card-title">{{ i.doc_name }}</h5>
+            <a href="#" class="btn btn-primary">Edit</a>
+            <a href="#" class="btn btn-secondary">Download</a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+
+    <!-- JS to handle section switching and modals -->
+    <script>
+        function showSection(sectionClass) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.container');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the active section
+            document.querySelector('.' + sectionClass).classList.add('active');
+            
+            // Remove active class from all links
+            const links = document.querySelectorAll('.navbar a');
+            links.forEach(link => {
+                link.classList.remove('active-link');
+            });
+
+            // Add active class to the clicked link
+            event.target.classList.add('active-link');
+        }
+
+        // Function to open modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        // Function to close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function confirmDelete(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-family/${id}/`;
+    }
+}
+
+function confirmDeleteBank(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-bank/${id}/`;
+    }
+}
+
+function confirmDeleteCredit(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-credit/${id}/`;
+    }
+}
+
+function confirmDeleteDebit(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-debit/${id}/`;
+    }
+}
+
+function confirmDeleteLoan(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-loan/${id}/`;
+    }
+}
+
+function confirmDeleteProperty(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-property/${id}/`;
+    }
+}
+
+function confirmDeleteInsurance(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-insurance/${id}/`;
+    }
+}
+
+function confirmDeleteInvestment(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-investment/${id}/`;
+    }
+}
+
+function confirmDeleteScheme(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-schemes/${id}/`;
+    }
+}
+
+function confirmDeleteCard(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-card/${id}/`;
+    }
+}
+
+function confirmDeletePerLoan(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-personal-loan/${id}/`;
+    }
+}
+
+function confirmDeleteGoldLoan(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-gold-loan/${id}/`;
+    }
+}
+
+function confirmDeleteHouseLoan(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/delete-house-loan/${id}/`;
+    }
+}
+
+function confirmDeleteStockInvestment(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/del-stock-invest/${id}/`;
+    }
+}
+
+function confirmDeleteFundInvestment(id, section) {
+    if (confirm("Are you sure you want to delete this entry?")) {
+        window.location.href = `/del-fund-invest/${id}/`;
+    }
+}
+
+
+
+    </script>
+
+</body>
+</html>
